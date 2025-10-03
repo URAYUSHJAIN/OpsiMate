@@ -582,10 +582,40 @@ const Settings: React.FC = () => {
 
 // Version Footer Component
 const VersionFooter: React.FC = () => {
-    const { data: versionInfo } = useVersion();
+    const { data: versionInfo, isLoading, error } = useVersion();
     
-    if (!versionInfo) {
-        return null;
+    if (isLoading) {
+        return (
+            <div className="border-t border-border bg-muted/30">
+                <div className="max-w-6xl mx-auto px-6 py-4">
+                    <div className="flex items-center justify-between text-sm text-muted-foreground">
+                        <div className="flex items-center gap-4">
+                            <span className="font-medium">Loading version information...</span>
+                        </div>
+                        <div className="text-xs">
+                            © 2024 OpsiMate. All rights reserved.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+    
+    if (error || !versionInfo) {
+        return (
+            <div className="border-t border-border bg-muted/30">
+                <div className="max-w-6xl mx-auto px-6 py-4">
+                    <div className="flex items-center justify-between text-sm text-muted-foreground">
+                        <div className="flex items-center gap-4">
+                            <span className="font-medium">OpsiMate</span>
+                        </div>
+                        <div className="text-xs">
+                            © 2024 OpsiMate. All rights reserved.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
     }
     
     return (
@@ -603,7 +633,7 @@ const VersionFooter: React.FC = () => {
                         )}
                     </div>
                     <div className="text-xs">
-                        © 2024 OpsiMate. All rights reserved.
+                        © {new Date().getFullYear()} OpsiMate. All rights reserved.
                     </div>
                 </div>
             </div>

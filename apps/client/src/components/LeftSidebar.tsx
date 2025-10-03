@@ -147,12 +147,12 @@ interface VersionDisplayProps {
 }
 
 const VersionDisplay: React.FC<VersionDisplayProps> = ({ collapsed }) => {
-  const { data: versionInfo } = useVersion();
+  const { data: versionInfo, isLoading } = useVersion();
   
-  if (!versionInfo) {
+  if (isLoading || !versionInfo) {
     return (
       <p className={cn("text-xs text-muted-foreground", collapsed && "sr-only")}>
-        © 2024 OpsiMate
+        © {new Date().getFullYear()} OpsiMate
       </p>
     );
   }
@@ -160,10 +160,10 @@ const VersionDisplay: React.FC<VersionDisplayProps> = ({ collapsed }) => {
   return (
     <div className={cn("text-xs text-muted-foreground space-y-1", collapsed && "sr-only")}>
       <p className="font-medium">
-        OpsiMate v{versionInfo.version}
+        {versionInfo.name} v{versionInfo.version}
       </p>
       <p>
-        © 2024 OpsiMate
+        © {new Date().getFullYear()} OpsiMate
       </p>
     </div>
   );
